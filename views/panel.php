@@ -1,6 +1,6 @@
-<?php include("shared/header.php"); ?>
+<?php include("./header.php"); ?>
 
-<?php include("shared/sidebar.php"); ?>
+<?php include("./sidebar.php"); ?>
  
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -101,4 +101,4 @@
 
 
 
-<?php include("shared/footer.php"); ?>
+<?php include("./footer.php"); ?>

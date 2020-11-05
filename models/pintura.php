@@ -1,64 +1,107 @@
 <?php
 
-include './conexion.php';
+declare(strict_types=1);
+require_once("conexion.php");
 
-$conn = new Conexion();
-
-$titulo = $_POST['titulo'];
-$descripcion = $_POST['descripcion'];
-$fecha_creacion = $_POST['fecha_creacion'];
-$fotos_galeria = $_POST['fotos_galeria'];
-$foto = $_POST['foto'];
-$precio = $_POST['precio'];
-
-class Pintura
+class Pintura extends Conexion
 {
 
-    public function insertar()
+    public function __construct()
     {
-        if (isset($_POST['submit'])) {
-            if (
-                isset($titulo) && isset($descripcion) && isset($fecha_creacion)
-                && isset($fotos_galeria) && isset($foto) && isset($precio)
-            ) {
-                if (
-                    !empty($titulo) && !empty($descripcion) && !empty($fecha_creacion)
-                    && !empty($fotos_galeria) && !empty($foto) && !empty($precio)
-                ) {
+        parent::__construct();
+    }
 
-                    $query = "INSERT INTO Pintura(titulo, descripcion, fecha_creacion, precio) VALUES 
-                    ('$titulo', '$descripcion', '$fecha_creacion', '$precio')";
+    public function getPinturas()
+    {
+        $conn = parent::conexion();
+        $sql = "SELECT *FROM PINTURA";
+        $sql = $conn->prepare($sql);
+        $sql->execute();
+        return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-                    if ($sql = $this->conn->exec($query)) {
-                        echo '
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            La pintura fue creada correctamente.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    ';
-                    } else {
-                        echo '
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            La pintura no pudo crearse.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    ';
-                    }
-                } else {
-                    echo '
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>¡Oops!</strong> Los campos no pueden ir vacíos
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    ';
-                }
-            }
+    public function getPinturaById($idPin)
+    {
+        $conn = parent::conexion();
+        $sql = "SELECT *FROM PINTURA where idPin = ?";
+        $sql = $conn->prepare($sql);
+        $sql->bindValue(1, $idPin);
+        $sql->execute();
+        return $resultado = $sql->fetchAll();
+    }
+
+    public function issetPintura($titulo)
+    {
+        $conn = parent::conexion();
+        $sql = "SELECT *FROM PINTURA where titulo = ?";
+        $sql = $conn->prepare($sql);
+        $sql->bindValue(1, $titulo);
+        $sql->execute();
+        return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function crearPintura($titulo, $descripcion, $precio, $foto)
+    {
+        $conn = parent::conexion();
+
+        $image = '';
+
+        if ($_FILES["foto"]["name"] != '') {
+            $image = $this->upload_image();
+        }
+
+
+        $sql = "INSERT INTO PINTURA (titulo, descripcion, precio, foto)
+        VALUES (?, ?, ?, ?)";
+
+
+
+        $sql = $conn->prepare($sql);
+        $sql->bindValue(1, $_POST['titulo']);
+        $sql->bindValue(2, $_POST['descripcion']);
+        $sql->bindValue(3, $_POST['precio']);
+        $sql->bindValue(4, $image);
+        $sql->execute();
+    }
+
+    public function editarPintura($idPin, $titulo, $descripcion, $precio, $foto)
+    {
+        $conn = parent::conexion();
+
+        $foto = '';
+
+        if ($_FILES["foto"]["name"] != '') {
+            $foto = $this->upload_image();
+        } else {
+
+            $foto = $_POST["foto_hidden"];
+        }
+
+        $sql = "UPDATE PINTURA SET titulo = ?, 
+        descripcion = ?, 
+        precio = ?,
+        foto = ?
+        where idPin = ?";
+
+        $sql = $conn->prepare($sql);
+        $sql->bindValue(1, $_POST['titulo']);
+        $sql->bindValue(2, $_POST['descripcion']);
+        $sql->bindValue(3, $_POST['precio']);
+        $sql->bindValue(4, $foto);
+        $sql->bindValue(5, $_POST['idPin']);
+        $sql->execute();
+    }
+
+    /*poner la ruta vistas/upload*/
+    public function upload_image()
+    {
+
+        if (isset($_FILES["foto"])) {
+            $extension = explode('.', $_FILES['foto']['name']);
+            $new_name = rand() . '.' . $extension[1];
+            $destination = '../views/upload/' . $new_name;
+            move_uploaded_file($_FILES['foto']['tmp_name'], $destination);
+            return $new_name;
         }
     }
 }
