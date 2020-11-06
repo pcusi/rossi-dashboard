@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+session_start();
 
 class Conexion
 {
@@ -34,4 +35,9 @@ class Conexion
         return $conn;
     }
 
+    public function ruta()
+    {
+
+        return "http://localhost/rossi-backend/";
+    }
 }

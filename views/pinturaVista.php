@@ -1,3 +1,17 @@
+<?php
+
+   require_once("../models/conexion.php");
+
+    $conn = new Conexion();
+
+    if(isset($_SESSION["idUsu"])){
+
+            
+?>
+
+
+
+
 <?php include('./header.php'); ?>
 
 
@@ -94,3 +108,14 @@
 
 
 <?php include('./footer.php') ?>
+
+
+<?php
+   
+  } else {
+
+        header("Location:".$conn->ruta()."index.php");
+
+  }
+
+?>
