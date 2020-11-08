@@ -143,4 +143,15 @@ function guardaryeditar(e) {
 
 }
 
+function estado(idPin, estado) {
+    $.ajax({
+        url: '../controller/pinturaController.php?estado',
+        method: 'POST',
+        data: {idPin: idPin, estado: estado},
+        success: function(data) {
+            $('#tabla').DataTable().ajax.reload();
+        }
+    });
+}
+
 init();

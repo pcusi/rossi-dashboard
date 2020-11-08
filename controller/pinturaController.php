@@ -173,4 +173,10 @@ switch ($_GET["op"]) {
 
 
         break;
+        case "estado": 
+            $datos = $pintura->getPinturaById($_POST['idPin']);
+            if (is_array($datos) and count($datos)>0) {
+                $pintura->estadoPintura($_POST['idPin'] , $_POST['estado']);
+            }
+        break;
 }

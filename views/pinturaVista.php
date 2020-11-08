@@ -46,6 +46,7 @@
               <th>Precio</th>
               <th>Fecha Creación</th>
               <th>Foto</th>
+              <th>Estado</th>
               <th>Editar</th>
               <th>Eliminar</th>
             </tr>

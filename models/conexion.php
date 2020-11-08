@@ -17,9 +17,9 @@ class Conexion
     {
 
         $host = '127.0.0.1';
-        $db = 'db_rossi';
-        $user = 'pierci';
-        $password = 'piero';
+        $db = 'DB_ROSSI';
+        $user = 'root';
+        $password = '';
 
         try {
             $conn = new PDO(
@@ -38,6 +38,6 @@ class Conexion
     public function ruta()
     {
 
-        return "http://localhost/rossi-backend/";
+        return "http://localhost/rossi-dashboard/";
     }
 }
