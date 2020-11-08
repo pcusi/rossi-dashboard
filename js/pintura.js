@@ -108,10 +108,8 @@ function mostrar(idPin) {
         $('#precio').val(data.precio);
         $('#descripcion').val(data.descripcion);
         $('#foto_muestra').html(data.foto);
-        console.log(data.foto);
         $('.modal-title').text("Editar Categoría");
         $('#idPin').val(data.idPin);
-        console.log(data.idPin)
         $('#submit').val("Editar");
     });
 }
@@ -143,15 +141,40 @@ function guardaryeditar(e) {
 
 }
 
-function estado(idPin, estado) {
-    $.ajax({
-        url: '../controller/pinturaController.php?estado',
-        method: 'POST',
-        data: {idPin: idPin, estado: estado},
-        success: function(data) {
-            $('#tabla').DataTable().ajax.reload();
+function estado(idPin, est) {
+    bootbox.confirm("¿Está seguro de cambiar estado?", function(result){
+        if (result) {
+            $.ajax({
+                url: '../controller/pinturaController.php?op=estado',
+                method: 'POST',
+                data: {idPin: idPin, est: est},
+                cache: false,
+                success: function(data) {
+                    $('#resultado').html(data);
+                    $('#tabla').DataTable().ajax.reload();
+                }
+            });
         }
     });
 }
+
+function eliminar(idPin) {
+
+    $.ajax({
+        url: '../controller/pinturaController.php?op=eliminar',
+        method: 'DELETE',
+        data: {idPin: idPin},
+        success: function(data) {
+            $('#resultado').html(data);
+        }
+    })
+
+}
+
+$('#close').click(function(){
+    limpiar();
+    $('#foto_muestra').html('No hay imagen');
+});
+
 
 init();

@@ -131,6 +131,18 @@ switch ($_GET["op"]) {
         foreach ($datos as $row) {
             $sub_array = array();
 
+            $est = '';
+            $attrib = 'btn btn-success';
+
+            if ($row['estado'] == 0) {
+                $est = 'Inactivo';
+                $attrib = 'btn btn-danger';
+            } else {
+                if ($row['estado'] == 1) {
+                    $est = 'Activo';
+                }
+            }
+
             $sub_array[] = $row["titulo"];
             $sub_array[] = $row["descripcion"];
             $sub_array[] = $row["precio"];
@@ -143,21 +155,23 @@ switch ($_GET["op"]) {
                 <input type="hidden" name="foto_hidden" value="' . $row["foto"] . '"/>
 				';
             } else {
-
-
                 $sub_array[] = '<button type="button" id="" class="btn btn-primary btn-md"><i class="fa fa-picture-o" aria-hidden="true"></i>Sin imagen</button>';
             }
 
             $sub_array[] = '<button type="button" 
-            onClick="mostrar(' . $row["idPin"] . ');"  id="' . $row["idPin"] . '"
-            class="btn btn-warning btn-md update">
-            <i class="glyphicon glyphicon-edit"></i> Editar</button>';
+            onClick="estado('.$row["idPin"].', '.$row["estado"].');"  id="'. $row["idPin"].'"
+            class="'.$attrib.'">
+            '.$est.'</button>';
 
             $sub_array[] = '<button type="button" 
-            onClick="eliminar(' . $row["idPin"] . ');" 
-            id="' . $row["idPin"] . '"class="btn btn-danger btn-md">
-            <i class="glyphicon glyphicon-edit">
-            </i> Eliminar
+            onClick="mostrar(' . $row["idPin"] . ');"  id="' . $row["idPin"] . '"
+            class="btn btn-warning btn-md update">
+            Editar</button>';
+
+            $sub_array[] = '<button type="button" 
+            onClick="eliminar('.$row["idPin"].');" 
+            id="'.$row["idPin"] . '"class="btn btn-danger btn-md">
+            Eliminar
             </button>';
 
             $data[] = $sub_array;
@@ -174,9 +188,15 @@ switch ($_GET["op"]) {
 
         break;
         case "estado": 
-            $datos = $pintura->getPinturaById($_POST['idPin']);
+            $datos = $pintura->getPinturaById($_POST["idPin"]);
             if (is_array($datos) and count($datos)>0) {
-                $pintura->estadoPintura($_POST['idPin'] , $_POST['estado']);
+                $pintura->estadoPintura($_POST["idPin"], $_POST["est"]);
+            }
+        break;
+        case "eliminar":
+            $datos = $pintura->getPinturaById($_POST["idPin"]);
+            if (is_array($datos) and count($datos)>0) {
+                $pintura->eliminarPintura($_POST["idPin"]);
             }
         break;
 }

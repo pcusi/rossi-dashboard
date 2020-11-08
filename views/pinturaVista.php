@@ -66,12 +66,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Agregar pintura</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form id="pintura-form" method="post">
+       <div class="row">
+         <div class="col-lg-8">
+         <form id="pintura-form" method="post">
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
@@ -94,14 +96,16 @@
             <div class="col-lg-6">
               <input type="file" id="foto" name="foto">
             </div>
-            <div class="col-lg-6">
-              <span id="foto_muestra"></span>
-            </div>
           </div>
-          <button type="submit" class="btn btn-primary float-right" id="action" name="action">
+          <button type="submit" class="btn btn-primary btn-sm my-3" id="action" name="action">
             Agregar Pintura
           </button>
         </form>
+         </div>
+         <div class="col-lg-4">
+         <span id="foto_muestra"></span>
+         </div>
+       </div>
       </div>
     </div>
   </div>

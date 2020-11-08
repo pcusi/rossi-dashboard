@@ -92,10 +92,10 @@ class Pintura extends Conexion
         $sql->execute();
     }
 
-    public function estadoPintura($estado, $idPin) {
+    public function estadoPintura($idPin, $estado) {
         $conn = parent::conexion();
 
-        if($_POST['estado']=="0") {
+        if($_POST['est']== 0) {
             $estado = 1;
         } else {
             $estado = 0;
@@ -108,6 +108,16 @@ class Pintura extends Conexion
         $sql->bindValue(2, $idPin);
         $sql->execute();
 
+    }
+
+    public function eliminarPintura($idPin) {
+        $conn = parent::conexion();
+
+        $sql = "DELETE FROM PINTURA WHERE idPin = ?";
+
+        $sql->$conn->prepare($sql);
+        $sql->bindValue(1, $idPin);
+        $sql->execute();
     }
 
     /*poner la ruta vistas/upload*/
