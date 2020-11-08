@@ -104,4 +104,14 @@ class Pintura extends Conexion
             return $new_name;
         }
     }
+
+    public function upload_multiple_image()
+    {
+        if (count($_FILES["fotos"]["tmp_name"]) > 0) {
+            for ($count = 0; $count($_FILES["fotos"]["tmp_name"]); $count++) {
+                $files = addslashes(file_get_contents($_FILES["fotos"]["tmp_name"][$count]));
+                
+            }
+        }
+    }
 }

@@ -21,6 +21,7 @@ if (isset($_SESSION["idUsu"])) {
         <!-- Font Awesome -->
         <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
         <link rel="stylesheet" href="../plugins/datatables/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="../dist/css/style.css">
         <link href="../plugins/datatables/buttons.dataTables.min.css" rel="stylesheet" />
         <link href="../plugins/datatables/responsive.dataTables.min.css" rel="stylesheet" />
         <!-- Ionicons -->

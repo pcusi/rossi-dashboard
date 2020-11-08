@@ -108,10 +108,8 @@ function mostrar(idPin) {
         $('#precio').val(data.precio);
         $('#descripcion').val(data.descripcion);
         $('#foto_muestra').html(data.foto);
-        console.log(data.foto);
-        $('.modal-title').text("Editar Categoría");
+        $('.modal-title').text("Editar Pintura");
         $('#idPin').val(data.idPin);
-        console.log(data.idPin)
         $('#submit').val("Editar");
     });
 }
