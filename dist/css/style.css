@@ -16,3 +16,12 @@
     font-size: 0.9em;
     vertical-align: center;
 }
+
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.estado-pintura span {
+    cursor: pointer;
+}

@@ -18,7 +18,6 @@ if (isset($_SESSION["idUsu"])) {
   <?php include('./sidebar.php') ?>
 
 
-<<<<<<< HEAD
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -47,6 +46,8 @@ if (isset($_SESSION["idUsu"])) {
                 <th>Precio</th>
                 <th>Fecha Creación</th>
                 <th>Foto</th>
+                <th>Galería</th>
+                <th>Estado</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
               </tr>
@@ -60,151 +61,55 @@ if (isset($_SESSION["idUsu"])) {
     </section>
   </div>
 
-  <!-- Modal -->
   <div class="modal fade" id="pinturaModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Agregar pintura</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form id="pintura-form" method="post">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Indica un título ..." required>
-                </div>
-=======
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div id="resultado"></div>
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Pinturas</h1>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
-
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
-      <div class="panel-body table-responsive">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#pinturaModal" id="add-pintura">Agregar</button>
-        <table id="tabla" class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>Titulo</th>
-              <th>Descripción</th>
-              <th>Precio</th>
-              <th>Fecha Creación</th>
-              <th>Foto</th>
-              <th>Estado</th>
-              <th>Editar</th>
-              <th>Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="pinturaModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar pintura</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <div class="row">
-         <div class="col-lg-8">
-         <form id="pintura-form" method="post">
           <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Indica un título ..." required>
->>>>>>> de3733d8de7a6c57648be4fc642aff330604c517
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="number" name="precio" id="precio" class="form-control" placeholder="Precio ..." required>
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <textarea type="text" name="descripcion" id="descripcion" class="form-control" placeholder="Alguna descripción ..." required></textarea></div>
-              </div>
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <input type="hidden" name="idPin" id="idPin" class="form-control"></div>
-              </div>
-              <div class="col-lg-8">
-                <div class="form-group">
-                  <div class="custom-file">
-                    <input type="file" id="foto" name="foto" class="custom-file-input">
-                    <label class="custom-file-label" for="customFile">
-                      Subir imagen de portada
-                    </label>
+            <div class="col-lg-8">
+              <form id="pintura-form" method="post">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <input type="text" name="titulo" id="titulo" required class="form-control"
+                      placeholder="Título pintura ...">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <input type="text" name="precio" id="precio" required class="form-control"
+                      placeholder="Precio...">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <textarea name="descripcion" id="descripcion" cols="30" rows="10" 
+                      class="form-control" placeholder="Descripción de la pintura ..."></textarea>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <input type="file" name="foto" id="foto">
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-lg-4">
-                <span id="foto_muestra"></span>
-              </div>
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <div class="custom-file">
-                    <input type="file" id="fotos_galeria" name="fotos_galeria[]" class="custom-file-input">
-                    <label class="custom-file-label" for="customFile">Subir galería</label>
-                  </div>
-                </div>
-              </div>
+                <button class="btn btn-md btn-primary" id="submit" name="submit">Agregar Pintura</button>
+              </form>
             </div>
-            <button type="submit" class="btn btn-primary float-right" id="action" name="action">
-              Agregar Pintura
-            </button>
-          </form>
-        </div>
-            <div class="col-lg-12">
-              <div class="form-group">
-                <textarea type="text" name="descripcion" id="descripcion" class="form-control" placeholder="Alguna descripción ..." required></textarea></div>
-            </div>
-            <div class="col-lg-12">
-              <div class="form-group">
-                <input type="hidden" name="idPin" id="idPin" class="form-control"></div>
-            </div>
-            <div class="col-lg-6">
-              <input type="file" id="foto" name="foto">
+            <div class="col-lg-4">
+              <span id="foto_muestra"></span>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-sm my-3" id="action" name="action">
-            Agregar Pintura
-          </button>
-        </form>
-         </div>
-         <div class="col-lg-4">
-         <span id="foto_muestra"></span>
-         </div>
-       </div>
+        </div>
       </div>
     </div>
   </div>
-
 
   <?php include('./footer.php') ?>
 

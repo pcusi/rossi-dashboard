@@ -87,8 +87,8 @@ switch ($_GET["op"]) {
                 $output["idPin"] = $row["idPin"];
 
                 if ($row["foto"] != '') {
-                    $output["foto"] = '<img src="upload/'.$row["foto"] . '"class="img-thumbnail" width="300" height="50"/>
-                    <input type="hidden" name="foto_hidden" value="'.$row["foto"].'"/>';
+                    $output["foto"] = '<img src="upload/' . $row["foto"] . '"class="img-thumbnail" width="300" height="50"/>
+                    <input type="hidden" name="foto_hidden" value="' . $row["foto"] . '"/>';
                 } else {
                     $output["foto"] = '<input type="hidden" name="foto_hidden" value="" />';
                 }
@@ -133,10 +133,12 @@ switch ($_GET["op"]) {
 
             $est = '';
             $attrib = 'btn btn-success';
+            $span = 'badge badge-success';
 
             if ($row['estado'] == 0) {
                 $est = 'Inactivo';
                 $attrib = 'btn btn-danger';
+                $span = 'badge badge-danger';
             } else {
                 if ($row['estado'] == 1) {
                     $est = 'Activo';
@@ -151,27 +153,37 @@ switch ($_GET["op"]) {
             if ($row['foto'] != '') {
                 $sub_array[] =
                     '
-                <img src="upload/' . $row["foto"] . '" class="img-thumbnail" width="200" height="50" />
+                <img src="upload/' . $row["foto"] . '" class="img-thumbnail" width="50" height="50" />
                 <input type="hidden" name="foto_hidden" value="' . $row["foto"] . '"/>
 				';
             } else {
                 $sub_array[] = '<button type="button" id="" class="btn btn-primary btn-md"><i class="fa fa-picture-o" aria-hidden="true"></i>Sin imagen</button>';
             }
 
-            $sub_array[] = '<button type="button" 
-            onClick="estado('.$row["idPin"].', '.$row["estado"].');"  id="'. $row["idPin"].'"
-            class="'.$attrib.'">
-            '.$est.'</button>';
+            $sub_array[] = '
+            <button type="button" 
+            onClick="mostrar(' . $row["idPin"] . ');"  id="' . $row["idPin"] . '"
+            class="btn btn-warning btn-md update">
+            Agregar fotos</button>
+            ';
+
+            $sub_array[] = '
+            <div class="estado-pintura">
+                <span class="' . $span . '"
+                onClick="estado(' . $row["idPin"] . ', ' . $row["estado"] . ');"  
+                id="' . $row["idPin"] . '">' . $est . '</span>
+            </div>
+            ';
 
             $sub_array[] = '<button type="button" 
             onClick="mostrar(' . $row["idPin"] . ');"  id="' . $row["idPin"] . '"
             class="btn btn-warning btn-md update">
-            Editar</button>';
+            <i class="fa fa-edit text-white"></i></button>';
 
             $sub_array[] = '<button type="button" 
-            onClick="eliminar('.$row["idPin"].');" 
-            id="'.$row["idPin"] . '"class="btn btn-danger btn-md">
-            Eliminar
+            onClick="eliminar(' . $row["idPin"] . ');" 
+            id="' . $row["idPin"] . '"class="btn btn-danger btn-md">
+            <i class="fa fa-eraser text-white"></i>
             </button>';
 
             $data[] = $sub_array;
@@ -187,16 +199,16 @@ switch ($_GET["op"]) {
 
 
         break;
-        case "estado": 
-            $datos = $pintura->getPinturaById($_POST["idPin"]);
-            if (is_array($datos) and count($datos)>0) {
-                $pintura->estadoPintura($_POST["idPin"], $_POST["est"]);
-            }
+    case "estado":
+        $datos = $pintura->getPinturaById($_POST["idPin"]);
+        if (is_array($datos) and count($datos) > 0) {
+            $pintura->estadoPintura($_POST["idPin"], $_POST["est"]);
+        }
         break;
-        case "eliminar":
-            $datos = $pintura->getPinturaById($_POST["idPin"]);
-            if (is_array($datos) and count($datos)>0) {
-                $pintura->eliminarPintura($_POST["idPin"]);
-            }
+    case "eliminar":
+        $datos = $pintura->getPinturaById($_POST["idPin"]);
+        if (is_array($datos) and count($datos) > 0) {
+            $pintura->eliminarPintura($_POST["idPin"]);
+        }
         break;
 }

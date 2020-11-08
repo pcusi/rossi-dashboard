@@ -108,13 +108,9 @@ function mostrar(idPin) {
         $('#precio').val(data.precio);
         $('#descripcion').val(data.descripcion);
         $('#foto_muestra').html(data.foto);
-<<<<<<< HEAD
         $('.modal-title').text("Editar Pintura");
-=======
-        $('.modal-title').text("Editar Categoría");
->>>>>>> de3733d8de7a6c57648be4fc642aff330604c517
         $('#idPin').val(data.idPin);
-        $('#submit').val("Editar");
+        $('#submit').text("Editar Pintura");
     });
 }
 
@@ -146,14 +142,14 @@ function guardaryeditar(e) {
 }
 
 function estado(idPin, est) {
-    bootbox.confirm("¿Está seguro de cambiar estado?", function(result){
+    bootbox.confirm("¿Está seguro de cambiar estado?", function (result) {
         if (result) {
             $.ajax({
                 url: '../controller/pinturaController.php?op=estado',
                 method: 'POST',
-                data: {idPin: idPin, est: est},
+                data: { idPin: idPin, est: est },
                 cache: false,
-                success: function(data) {
+                success: function (data) {
                     $('#resultado').html(data);
                     $('#tabla').DataTable().ajax.reload();
                 }
@@ -167,17 +163,16 @@ function eliminar(idPin) {
     $.ajax({
         url: '../controller/pinturaController.php?op=eliminar',
         method: 'DELETE',
-        data: {idPin: idPin},
-        success: function(data) {
+        data: { idPin: idPin },
+        success: function (data) {
             $('#resultado').html(data);
         }
     })
 
 }
 
-$('#close').click(function(){
-    limpiar();
-    $('#foto_muestra').html('No hay imagen');
+$('#close').click(function () {
+    window.location.reload();
 });
 
 
