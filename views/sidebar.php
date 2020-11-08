@@ -27,6 +27,7 @@ if (isset($_SESSION["idUsu"])) {
                     <div class="user-avatar">
                         <p><?php echo $_SESSION["usuario"] ?></p>
                     </div>
+                    <img src="../dist/img/7.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
                     <a href="#" class="d-block"><?php echo $_SESSION["usuario"] ?></a>

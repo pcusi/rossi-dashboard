@@ -92,6 +92,35 @@ class Pintura extends Conexion
         $sql->execute();
     }
 
+    public function estadoPintura($idPin, $estado)
+    {
+        $conn = parent::conexion();
+
+        if ($_POST['est'] == 0) {
+            $estado = 1;
+        } else {
+            $estado = 0;
+        }
+
+        $sql = "UPDATE PINTURA SET estado = ? where idPin = ?";
+
+        $sql = $conn->prepare($sql);
+        $sql->bindValue(1, $estado);
+        $sql->bindValue(2, $idPin);
+        $sql->execute();
+    }
+
+    public function eliminarPintura($idPin)
+    {
+        $conn = parent::conexion();
+
+        $sql = "DELETE FROM PINTURA WHERE idPin = ?";
+
+        $sql = $conn->prepare($sql);
+        $sql->bindValue(1, $idPin);
+        $sql->execute();
+    }
+
     /*poner la ruta vistas/upload*/
     public function upload_image()
     {
@@ -110,7 +139,6 @@ class Pintura extends Conexion
         if (count($_FILES["fotos"]["tmp_name"]) > 0) {
             for ($count = 0; $count($_FILES["fotos"]["tmp_name"]); $count++) {
                 $files = addslashes(file_get_contents($_FILES["fotos"]["tmp_name"][$count]));
-                
             }
         }
     }
