@@ -32,6 +32,8 @@ if (isset($_SESSION["idUsu"])) {
         <link rel="stylesheet" href="../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
         <!-- JQVMap -->
         <link rel="stylesheet" href="../plugins/jqvmap/jqvmap.min.css">
+        <!-- icono -->
+        <link rel="icon" type="image/png" href="../favicon.png">
         <!-- Theme style -->
         <link rel="stylesheet" href="../dist/css/adminlte.min.css">
         <!-- overlayScrollbars -->
@@ -54,7 +56,7 @@ if (isset($_SESSION["idUsu"])) {
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <a class="nav-link" data-widget="control-sidebar" data-slide="true" id="logout" role="button">
                             <i class="fas fa-th-large"></i>
                         </a>
                     </li>

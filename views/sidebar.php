@@ -44,6 +44,14 @@ if (isset($_SESSION["idUsu"])) {
                             </p>
                         </a>
                     </li>
+                    <li>
+                        <a href="galeriaVista.php" class="nav-link">
+                            <i class="nav-icon fas fa-book"></i>
+                            <p>
+                                Galería
+                            </p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -56,6 +64,7 @@ if (isset($_SESSION["idUsu"])) {
 } else {
 
     header("Location:" . $conn->ruta() . "index.php");
+    exit();
     exit();
 }
 ?>

@@ -46,10 +46,8 @@ if (isset($_SESSION["idUsu"])) {
                 <th>Precio</th>
                 <th>Fecha Creación</th>
                 <th>Foto</th>
-                <th>Galería</th>
                 <th>Estado</th>
                 <th>Editar</th>
-                <th>Eliminar</th>
               </tr>
             </thead>
             <tbody>
@@ -77,20 +75,17 @@ if (isset($_SESSION["idUsu"])) {
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <input type="text" name="titulo" id="titulo" required class="form-control"
-                      placeholder="Título pintura ...">
+                      <input type="text" name="titulo" id="titulo" required class="form-control" placeholder="Título pintura ...">
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                      <input type="text" name="precio" id="precio" required class="form-control"
-                      placeholder="Precio...">
+                      <input type="text" name="precio" id="precio" required class="form-control" placeholder="Precio...">
                     </div>
                   </div>
                   <div class="col-lg-12">
                     <div class="form-group">
-                      <textarea name="descripcion" id="descripcion" cols="30" rows="10" 
-                      class="form-control" placeholder="Descripción de la pintura ..."></textarea>
+                      <textarea name="descripcion" id="descripcion" cols="30" rows="10" class="form-control" placeholder="Descripción de la pintura ..."></textarea>
                     </div>
                   </div>
                   <div class="col-lg-12">
@@ -98,6 +93,9 @@ if (isset($_SESSION["idUsu"])) {
                       <input type="file" name="foto" id="foto">
                     </div>
                   </div>
+                </div>
+                <div class="col-lg-4">
+                  <input type="hidden" name="idPin" id="idPin" />
                 </div>
                 <button class="btn btn-md btn-primary" id="submit" name="submit">Agregar Pintura</button>
               </form>
@@ -110,6 +108,7 @@ if (isset($_SESSION["idUsu"])) {
       </div>
     </div>
   </div>
+  </div>
 
   <?php include('./footer.php') ?>
 
@@ -119,6 +118,7 @@ if (isset($_SESSION["idUsu"])) {
 } else {
 
   header("Location:" . $conn->ruta() . "index.php");
+  exit();
 }
 
 ?>

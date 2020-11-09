@@ -3,7 +3,7 @@
 declare(strict_types=1);
 require_once("conexion.php");
 
-class Pintura extends Conexion
+class Galeria extends Conexion
 {
 
     public function __construct()
@@ -11,36 +11,38 @@ class Pintura extends Conexion
         parent::__construct();
     }
 
-    public function getPinturas()
+    public function getFotos()
     {
         $conn = parent::conexion();
-        $sql = "SELECT *FROM PINTURA";
+        $sql = "SELECT p.titulo as titulo, p.idPin as idPin, f.idFoto, f.foto, f.estado as estado
+        FROM PINTURA p INNER JOIN FOTO_PINTURA f on f.idPin = p.idPin";
         $sql = $conn->prepare($sql);
         $sql->execute();
         return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getPinturaById($idPin)
-    {
+    public function issetFoto($idPin) {
         $conn = parent::conexion();
-        $sql = "SELECT *FROM PINTURA where idPin = ?";
+        $sql = "SELECT *FROM FOTO_PINTURA where idPin = ?";
         $sql = $conn->prepare($sql);
         $sql->bindValue(1, $idPin);
         $sql->execute();
         return $resultado = $sql->fetchAll();
     }
 
-    public function issetPintura($titulo)
+    public function getFotoById($idPin)
     {
         $conn = parent::conexion();
-        $sql = "SELECT *FROM PINTURA where titulo = ?";
+        $sql = "SELECT p.titulo as titulo, p.idPin as idPin, f.idFoto as idFoto, f.foto as foto
+        FROM PINTURA p INNER JOIN FOTO_PINTURA f on f.idPin = p.idPin
+        where idFoto = ?";
         $sql = $conn->prepare($sql);
-        $sql->bindValue(1, $titulo);
+        $sql->bindValue(1, $idPin);
         $sql->execute();
-        return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado = $sql->fetchAll();
     }
 
-    public function crearPintura($titulo, $descripcion, $precio, $foto)
+    public function crearFoto($foto, $idPin)
     {
         $conn = parent::conexion();
 
@@ -50,21 +52,16 @@ class Pintura extends Conexion
             $image = $this->upload_image();
         }
 
-
-        $sql = "INSERT INTO PINTURA (titulo, descripcion, precio, foto)
-        VALUES (?, ?, ?, ?)";
-
-
+        $sql = "INSERT INTO FOTO_PINTURA (foto, idPin)
+        VALUES (?, ?)";
 
         $sql = $conn->prepare($sql);
-        $sql->bindValue(1, $_POST['titulo']);
-        $sql->bindValue(2, $_POST['descripcion']);
-        $sql->bindValue(3, $_POST['precio']);
-        $sql->bindValue(4, $image);
+        $sql->bindValue(1, $image);
+        $sql->bindValue(2, $_POST['pintura']);
         $sql->execute();
     }
 
-    public function editarPintura($idPin, $titulo, $descripcion, $precio, $foto)
+    public function editarGaleria($idFoto, $foto, $idPin)
     {
         $conn = parent::conexion();
 
@@ -77,22 +74,17 @@ class Pintura extends Conexion
             $foto = $_POST["foto_hidden"];
         }
 
-        $sql = "UPDATE PINTURA SET titulo = ?, 
-        descripcion = ?, 
-        precio = ?,
-        foto = ?
-        where idPin = ?";
+        $sql = "UPDATE FOTO_PINTURA SET foto = ?, idPin = ?
+        where idFoto = ?";
 
         $sql = $conn->prepare($sql);
-        $sql->bindValue(1, $_POST['titulo']);
-        $sql->bindValue(2, $_POST['descripcion']);
-        $sql->bindValue(3, $_POST['precio']);
-        $sql->bindValue(4, $foto);
-        $sql->bindValue(5, $_POST['idPin']);
+        $sql->bindValue(1, $foto);
+        $sql->bindValue(2, $_POST['pintura']);
+        $sql->bindValue(3, $_POST['idFoto']);
         $sql->execute();
     }
 
-    public function estadoPintura($idPin, $estado)
+    public function estadoFoto($idFoto, $estado)
     {
         $conn = parent::conexion();
 
@@ -102,11 +94,11 @@ class Pintura extends Conexion
             $estado = 0;
         }
 
-        $sql = "UPDATE PINTURA SET estado = ? where idPin = ?";
+        $sql = "UPDATE FOTO_PINTURA SET estado = ? where idFoto = ?";
 
         $sql = $conn->prepare($sql);
         $sql->bindValue(1, $estado);
-        $sql->bindValue(2, $idPin);
+        $sql->bindValue(2, $idFoto);
         $sql->execute();
     }
 

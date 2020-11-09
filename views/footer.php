@@ -46,7 +46,9 @@
 <script src="../plugins/datatables/jszip.min.js"></script>
 <script src="../plugins/datatables/pdfmake.min.js"></script>
 <script src="../js/pintura.js"></script>
+<script src="../js/galeria.js"></script>
 <script src="../js/bootbox.min.js"></script>
+<script src="../js/usuario.js"></script>
 </body>
 
 </html>

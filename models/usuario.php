@@ -54,4 +54,10 @@ class Usuario extends Conexion
 
         } //condicion enviar
     }
+
+    public function logout()
+    {
+        session_destroy();
+        header('location: index.php');
+    }
 }

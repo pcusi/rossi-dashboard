@@ -1,26 +1,24 @@
 <?php
 
-require_once '../models/pintura.php';
+require_once '../models/galeria.php';
 require_once '../models/conexion.php';
 
-$pintura = new Pintura();
+$galeria = new Galeria();
 
-$titulo = isset($_POST['titulo']);
-$descripcion = isset($_POST['descripcion']);
-$precio = isset($_POST['precio']);
 $idPin = isset($_POST['idPin']);
 $foto = isset($_POST['foto']);
+$idFoto = isset($_POST['idFoto']);
 
 switch ($_GET["op"]) {
-    case "guardaryeditar":
-        $datos = $pintura->issetPintura($_POST["titulo"]);
-        if (empty($_POST["idPin"])) {
+    case "guardar":
+        $datos = $galeria->issetFoto($_POST["idPin"]);
+        if (empty($_POST["idFoto"])) {
 
             /*verificamos si existe la categoria en la base de datos, si ya existe un registro con la categoria entonces no se registra*/
 
             if (is_array($datos) == true and count($datos) == 0) {
 
-                $pintura->crearPintura($titulo, $descripcion, $precio, $foto);
+                $galeria->crearFoto($foto, $idPin);
 
                 $messages[] = "La pintura se registró correctamente";
             } else {
@@ -29,7 +27,7 @@ switch ($_GET["op"]) {
             }
         } else {
 
-            $pintura->editarPintura($idPin, $titulo, $descripcion, $precio, $foto);
+            $galeria->editarGaleria($idFoto, $foto, $idPin);
 
             $messages[] = "La pintura se editó correctamente";
         }
@@ -73,7 +71,7 @@ switch ($_GET["op"]) {
         //fin mensaje error
         break;
     case "mostrar":
-        $datos = $pintura->getPinturaById($_POST["idPin"]);
+        $datos = $galeria->getFotoById($_POST["idFoto"]);
 
 
         // si existe el id de la categoria entonces recorre el array
@@ -81,10 +79,10 @@ switch ($_GET["op"]) {
 
 
             foreach ($datos as $row) {
-                $output["titulo"] = $row["titulo"];
-                $output["descripcion"] = $row["descripcion"];
-                $output["precio"] = $row["precio"];
+                $output["foto"] = $row["foto"];
                 $output["idPin"] = $row["idPin"];
+                $output["titulo"] = $row["titulo"];
+                $output["idFoto"] = $row["idFoto"];
 
                 if ($row["foto"] != '') {
                     $output["foto"] = '<img src="upload/' . $row["foto"] . '"class="img-thumbnail" width="300" height="50"/>
@@ -123,7 +121,7 @@ switch ($_GET["op"]) {
         //fin de mensaje de error
         break;
     case "listar":
-        $datos = $pintura->getPinturas();
+        $datos = $galeria->getFotos();
 
         //Vamos a declarar un array
         $data = array();
@@ -145,10 +143,6 @@ switch ($_GET["op"]) {
                 }
             }
 
-            $sub_array[] = $row["titulo"];
-            $sub_array[] = $row["descripcion"];
-            $sub_array[] = $row["precio"];
-            $sub_array[] = $row["fecha_creacion"];
 
             if ($row['foto'] != '') {
                 $sub_array[] =
@@ -160,18 +154,22 @@ switch ($_GET["op"]) {
                 $sub_array[] = '<button type="button" id="" class="btn btn-primary btn-md"><i class="fa fa-picture-o" aria-hidden="true"></i>Sin imagen</button>';
             }
 
+            $sub_array[] = $row["titulo"];
+
+
+
+            $sub_array[] = '<button type="button" 
+            onClick="mostrarGaleria(' . $row["idFoto"] . ');"  id="' . $row["idFoto"] . '"
+            class="btn btn-warning btn-xs update">
+            <i class="fa fa-edit text-white"></i></button>';
+
             $sub_array[] = '
             <div class="estado-pintura">
                 <span class="' . $span . '"
-                onClick="estado(' . $row["idPin"] . ', ' . $row["estado"] . ');"  
-                id="' . $row["idPin"] . '">' . $est . '</span>
+                onClick="estadoGaleria(' . $row["idFoto"] . ', ' . $row["estado"] . ');"  
+                id="' . $row["idFoto"] . '">' . $est . '</span>
             </div>
             ';
-
-            $sub_array[] = '<button type="button" 
-            onClick="mostrar(' . $row["idPin"] . ');"  id="' . $row["idPin"] . '"
-            class="btn btn-warning btn-xs update">
-            <i class="fa fa-edit text-white"></i></button>';
 
             $data[] = $sub_array;
         }
@@ -187,9 +185,9 @@ switch ($_GET["op"]) {
 
         break;
     case "estado":
-        $datos = $pintura->getPinturaById($_POST["idPin"]);
+        $datos = $galeria->getFotoById($_POST["idFoto"]);
         if (is_array($datos) and count($datos) > 0) {
-            $pintura->estadoPintura($_POST["idPin"], $_POST["est"]);
+            $galeria->estadoFoto($_POST["idFoto"], $_POST["est"]);
         }
         break;
 }
